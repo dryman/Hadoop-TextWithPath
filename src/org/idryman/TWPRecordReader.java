@@ -15,13 +15,15 @@ public class TWPRecordReader extends LineRecordReader{
   public TWPRecordReader(byte[] recordDelimiterBytes) {
     super(recordDelimiterBytes);
   }
-
+  
+  @Override
   public void initialize(InputSplit genericSplit, TaskAttemptContext context) throws IOException{
     super.initialize(genericSplit, context);
     FileSplit split = (FileSplit) genericSplit;
     path = split.getPath();
   }
   
+  @Override
   public boolean nextKeyValue() throws IOException {
     if (super.nextKeyValue()){
       if (value == null)
@@ -32,5 +34,10 @@ public class TWPRecordReader extends LineRecordReader{
       value = null;
       return false;
     }
+  }
+  
+  @Override
+  public TextWithPath getCurrentValue(){
+    return value;
   }
 }
